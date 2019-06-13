@@ -1,0 +1,18 @@
+.addLead {
+  border-radius: 5px;
+  background-color: #0073ba;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  border: none;
+  padding: 6px 15px;
+  height: auto;
+  cursor: pointer;
+}
+
+.inputLabel {
+  margin-bottom: 0;
+  text-align: left;
+  display: block;
+  color: #102b41cc;
+}
