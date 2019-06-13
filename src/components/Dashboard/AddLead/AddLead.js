@@ -18,6 +18,7 @@ class AddLead extends Component {
     } = this.props;
     return (
       <form>
+        <h4 className="py-4">Add New Lead</h4>
         <div className="row">
           <div className="col-6">
             <label className="inputLabel">First Name</label>
