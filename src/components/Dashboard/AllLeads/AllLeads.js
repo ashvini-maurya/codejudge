@@ -5,7 +5,6 @@ import swal from "sweetalert2";
 import "./AllLeads.css";
 import Navigation from "../Navigation/Navigation";
 
-
 class AllLeads extends Component {
   state = {
     allLeads: [],
@@ -63,16 +62,18 @@ class AllLeads extends Component {
     });
   };
 
-  selectLead = (lead) => {
+  selectLead = lead => {
     this.setState({
       selectedLead: lead
     });
-  }
+  };
 
   noteSubmitHandler = () => {
     axios({
       method: "PUT",
-      url: `http://18.206.131.127:8100/api/leads/${this.state.selectedLead.id}/`,
+      url: `http://18.206.131.127:8100/api/leads/${
+        this.state.selectedLead.id
+      }/`,
       data: {
         first_name: this.state.selectedLead.first_name,
         last_name: this.state.selectedLead.last_name,
@@ -88,6 +89,10 @@ class AllLeads extends Component {
           title: "Note Added",
           text: "Note successfully added!"
         });
+        document.getElementById("noteModal").click();
+        this.setState({
+          note: ""
+        });
       })
       .catch(err => {
         console.log(err);
@@ -97,7 +102,7 @@ class AllLeads extends Component {
           text: "Something went wrong!"
         });
       });
-  }
+  };
 
   render() {
     return (
@@ -175,9 +180,7 @@ class AllLeads extends Component {
                     >
                       <span aria-hidden="true">&times;</span>
                     </button>
-                    <p className="text-center mb-0 pt-4">
-                      Please enter Note
-                    </p>
+                    <p className="text-center mb-0 pt-4">Please enter Note</p>
                     <div className="mt-3 w-75 mx-auto mb-3">
                       <div className="row justify-content-center">
                         <div className="col-12">
@@ -196,7 +199,7 @@ class AllLeads extends Component {
                           ) : null}
                         </div>
                         <button
-                          className="mt-4"
+                          className="mt-4 addLead"
                           onClick={this.noteSubmitHandler}
                         >
                           Submit

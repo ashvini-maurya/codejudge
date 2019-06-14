@@ -9,7 +9,6 @@ function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        {/* <Dashboard /> */}
         <Route path="/" exact component={Dashboard} />
         <Route path="/leads" exact component={AllLeads} />
       </div>
