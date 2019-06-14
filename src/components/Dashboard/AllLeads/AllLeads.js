@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Moment from "react-moment";
+import swal from "sweetalert2";
 import "./AllLeads.css";
 
 class AllLeads extends Component {
@@ -35,9 +36,19 @@ class AllLeads extends Component {
     })
       .then(res => {
         this.getAllLeads();
+        swal.fire({
+          type: 'success',
+          title: 'Lead Deleted',
+          text: 'Lead successfully deleted!'
+        })
       })
       .catch(err => {
         console.log(err);
+        swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: 'Something went wrong!'
+        })
       });
   }
 
