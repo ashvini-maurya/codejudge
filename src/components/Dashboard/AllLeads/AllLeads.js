@@ -63,14 +63,14 @@ class AllLeads extends Component {
                 <thead className="tableHead">
                   <tr>
                     <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email ID</th>
-                    <th>Mobile</th>
-                    <th>Status</th>
+                    <th className="text-left">First Name</th>
+                    <th className="text-left">Last Name</th>
+                    <th className="text-left">Email ID</th>
+                    <th className="text-left">Mobile</th>
+                    <th className="text-left">Status</th>
                     {/* <th>Location Type</th>
                     <th>Location String</th> */}
-                    <th>Created At</th>
+                    <th className="text-left">Created At</th>
                     <th />
                     <th />
                   </tr>
@@ -78,15 +78,15 @@ class AllLeads extends Component {
                 <tbody>
                   {this.state.allLeads.map((lead, index) => (
                     <tr key={lead.id}>
-                      <td>{index + 1}.</td>
-                      <td>{lead.first_name}</td>
-                      <td>{lead.last_name}</td>
-                      <td>{lead.email}</td>
-                      <td>{lead.mobile}</td>
-                      <td>{lead.status}</td>
+                      <td className="text-left">{index + 1}.</td>
+                      <td className="text-left">{lead.first_name}</td>
+                      <td className="text-left">{lead.last_name}</td>
+                      <td className="text-left">{lead.email}</td>
+                      <td className="text-left">{lead.mobile}</td>
+                      <td className="text-left">{lead.status}</td>
                       {/* <td>{lead.location_type}</td>
                       <td>{lead.location_string}</td> */}
-                      <td>
+                      <td className="text-left">
                         <Moment format="DD/MM/YYYY">{lead.created_at}</Moment>
                       </td>
                       <td>

@@ -56,7 +56,7 @@ class Dashboard extends Component {
           locationString: ""
         });
         swal.fire("Lead Added", "Lead Added Successfully", "success");
-        // this.props.history.push("/dashboard");
+        this.props.history.push("/leads");
       })
       .catch(err => {
         console.log(err);
