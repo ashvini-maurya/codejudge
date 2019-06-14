@@ -1,0 +1,11 @@
+.spinner {
+  padding-top: 35vh;
+  padding-bottom: 40vh;
+  height: 91vh;
+  color: #09324f;
+  opacity: 0.7;
+}
+
+.w_80px {
+  width: 80px !important;
+}

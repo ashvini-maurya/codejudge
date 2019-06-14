@@ -4,12 +4,14 @@ import Moment from "react-moment";
 import swal from "sweetalert2";
 import "./AllLeads.css";
 import Navigation from "../Navigation/Navigation";
+import Spinner from "../../../UI/Spinner/Spinner";
 
 class AllLeads extends Component {
   state = {
     allLeads: [],
     note: "",
-    selectedLead: {}
+    selectedLead: {},
+    loading: false
   };
 
   componentDidMount() {
@@ -17,18 +19,24 @@ class AllLeads extends Component {
   }
 
   getAllLeads = () => {
+    this.setState({
+      loading: true
+    });
     axios({
       method: "GET",
       url: "http://18.206.131.127:8100/api/leads/"
     })
       .then(res => {
-        console.log(res);
         this.setState({
-          allLeads: res.data
+          allLeads: res.data,
+          loading: false
         });
       })
       .catch(err => {
         console.log(err);
+        this.setState({
+          loading: false
+        });
       });
   };
 
@@ -108,57 +116,61 @@ class AllLeads extends Component {
     return (
       <div className="container">
         <div className="row justify-content-center">
-          <div className="dashboard mt-5 p-5">
-            <h4 className="py-4">All Leads</h4>
-            <Navigation />
-            <div className="table-responsive">
-              <table className="table table-hover">
-                <thead className="tableHead">
-                  <tr>
-                    <th>#</th>
-                    <th className="text-left">First Name</th>
-                    <th className="text-left">Last Name</th>
-                    <th className="text-left">Email ID</th>
-                    <th className="text-left">Mobile</th>
-                    <th className="text-left">Status</th>
-                    {/* <th>Location Type</th>
+          {this.state.loading ? (
+            <Spinner />
+          ) : (
+            <div className="dashboard mt-5 p-5">
+              <h4 className="py-4">All Leads</h4>
+              <Navigation />
+              <div className="table-responsive">
+                <table className="table table-hover">
+                  <thead className="tableHead">
+                    <tr>
+                      <th>#</th>
+                      <th className="text-left">First Name</th>
+                      <th className="text-left">Last Name</th>
+                      <th className="text-left">Email ID</th>
+                      <th className="text-left">Mobile</th>
+                      <th className="text-left">Status</th>
+                      {/* <th>Location Type</th>
                     <th>Location String</th> */}
-                    <th className="text-left">Created At</th>
-                    <th />
-                    <th />
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.allLeads.map((lead, index) => (
-                    <tr key={lead.id}>
-                      <td className="text-left">{index + 1}.</td>
-                      <td className="text-left">{lead.first_name}</td>
-                      <td className="text-left">{lead.last_name}</td>
-                      <td className="text-left">{lead.email}</td>
-                      <td className="text-left">{lead.mobile}</td>
-                      <td className="text-left">{lead.status}</td>
-                      {/* <td>{lead.location_type}</td>
-                      <td>{lead.location_string}</td> */}
-                      <td className="text-left">
-                        <Moment format="DD/MM/YYYY">{lead.created_at}</Moment>
-                      </td>
-                      <td>
-                        <i
-                          className="fas fa-pen-square cursorPointer"
-                          data-toggle="modal"
-                          data-target="#noteModal"
-                          onClick={() => this.selectLead(lead)}
-                        />
-                      </td>
-                      <td onClick={() => this.deleteLead(lead.id)}>
-                        <i className="fas fa-trash cursorPointer" />
-                      </td>
+                      <th className="text-left">Created At</th>
+                      <th />
+                      <th />
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    {this.state.allLeads.map((lead, index) => (
+                      <tr key={lead.id}>
+                        <td className="text-left">{index + 1}.</td>
+                        <td className="text-left">{lead.first_name}</td>
+                        <td className="text-left">{lead.last_name}</td>
+                        <td className="text-left">{lead.email}</td>
+                        <td className="text-left">{lead.mobile}</td>
+                        <td className="text-left">{lead.status}</td>
+                        {/* <td>{lead.location_type}</td>
+                      <td>{lead.location_string}</td> */}
+                        <td className="text-left">
+                          <Moment format="DD/MM/YYYY">{lead.created_at}</Moment>
+                        </td>
+                        <td>
+                          <i
+                            className="fas fa-pen-square cursorPointer"
+                            data-toggle="modal"
+                            data-target="#noteModal"
+                            onClick={() => this.selectLead(lead)}
+                          />
+                        </td>
+                        <td onClick={() => this.deleteLead(lead.id)}>
+                          <i className="fas fa-trash cursorPointer" />
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
+          )}
           {/* opening Note modal */}
           <div
             className="modal fade"
