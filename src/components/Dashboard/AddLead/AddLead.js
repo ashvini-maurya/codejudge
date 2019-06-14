@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./AddLead.css";
 import Select from "react-select";
+import Navigation from "../Navigation/Navigation";
 
 class AddLead extends Component {
   render() {
@@ -19,6 +20,7 @@ class AddLead extends Component {
     return (
       <form>
         <h4 className="py-4">Add New Lead</h4>
+        <Navigation />
         <div className="row">
           <div className="col-6">
             <label className="inputLabel">First Name</label>

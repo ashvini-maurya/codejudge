@@ -3,6 +3,8 @@ import axios from "axios";
 import Moment from "react-moment";
 import swal from "sweetalert2";
 import "./AllLeads.css";
+import Navigation from "../Navigation/Navigation";
+
 
 class AllLeads extends Component {
   state = {
@@ -103,6 +105,7 @@ class AllLeads extends Component {
         <div className="row justify-content-center">
           <div className="dashboard mt-5 p-5">
             <h4 className="py-4">All Leads</h4>
+            <Navigation />
             <div className="table-responsive">
               <table className="table table-hover">
                 <thead className="tableHead">
