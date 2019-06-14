@@ -19,23 +19,6 @@ class Dashboard extends Component {
     locationString: ""
   };
 
-  componentDidMount() {
-    this.getAllLeads();
-  }
-
-  getAllLeads = () => {
-    axios({
-      method: "GET",
-      url: "http://18.206.131.127:8100/api/leads/",
-    })
-    .then(res => {
-      console.log(res);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-  }
-
   inputChangeHandler = event => {
     const name = event.target.name;
     this.setState({
