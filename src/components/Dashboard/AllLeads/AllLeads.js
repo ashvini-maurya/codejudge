@@ -8,7 +8,7 @@ class AllLeads extends Component {
   state = {
     allLeads: [],
     note: "",
-    selectedLeadId: ""
+    selectedLead: {}
   };
 
   componentDidMount() {
@@ -61,17 +61,22 @@ class AllLeads extends Component {
     });
   };
 
-  selectLeadId = (leadId) => {
+  selectLead = (lead) => {
     this.setState({
-      selectedLeadId: leadId
-    })
+      selectedLead: lead
+    });
   }
 
   noteSubmitHandler = () => {
     axios({
       method: "PUT",
-      url: `http://18.206.131.127:8100/api/leads/${this.state.selectedLeadId}`,
+      url: `http://18.206.131.127:8100/api/leads/${this.state.selectedLead.id}/`,
       data: {
+        first_name: this.state.selectedLead.first_name,
+        last_name: this.state.selectedLead.last_name,
+        mobile: this.state.selectedLead.mobile,
+        email: this.state.selectedLead.email,
+        location_string: this.state.selectedLead.location_string,
         communication: this.state.note
       }
     })
@@ -134,7 +139,7 @@ class AllLeads extends Component {
                           className="fas fa-pen-square cursorPointer"
                           data-toggle="modal"
                           data-target="#noteModal"
-                          onClick={() => this.selectLeadId(lead.id)}
+                          onClick={() => this.selectLead(lead)}
                         />
                       </td>
                       <td onClick={() => this.deleteLead(lead.id)}>
