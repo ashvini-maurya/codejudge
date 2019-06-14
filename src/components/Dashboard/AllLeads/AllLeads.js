@@ -6,7 +6,9 @@ import "./AllLeads.css";
 
 class AllLeads extends Component {
   state = {
-    allLeads: []
+    allLeads: [],
+    note: "",
+    selectedLeadId: ""
   };
 
   componentDidMount() {
@@ -37,18 +39,56 @@ class AllLeads extends Component {
       .then(res => {
         this.getAllLeads();
         swal.fire({
-          type: 'success',
-          title: 'Lead Deleted',
-          text: 'Lead successfully deleted!'
-        })
+          type: "success",
+          title: "Lead Deleted",
+          text: "Lead successfully deleted!"
+        });
       })
       .catch(err => {
         console.log(err);
         swal.fire({
-          type: 'error',
-          title: 'Oops...',
-          text: 'Something went wrong!'
-        })
+          type: "error",
+          title: "Oops...",
+          text: "Something went wrong!"
+        });
+      });
+  }
+
+  noteChangeHandler = event => {
+    const name = event.target.name;
+    this.setState({
+      [name]: event.target.value
+    });
+  };
+
+  selectLeadId = (leadId) => {
+    this.setState({
+      selectedLeadId: leadId
+    })
+  }
+
+  noteSubmitHandler = () => {
+    axios({
+      method: "PUT",
+      url: `http://18.206.131.127:8100/api/leads/${this.state.selectedLeadId}`,
+      data: {
+        communication: this.state.note
+      }
+    })
+      .then(res => {
+        swal.fire({
+          type: "success",
+          title: "Note Added",
+          text: "Note successfully added!"
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        swal.fire({
+          type: "error",
+          title: "Oops...",
+          text: "Something went wrong!"
+        });
       });
   }
 
@@ -90,7 +130,12 @@ class AllLeads extends Component {
                         <Moment format="DD/MM/YYYY">{lead.created_at}</Moment>
                       </td>
                       <td>
-                        <i className="fas fa-pen-square cursorPointer" />
+                        <i
+                          className="fas fa-pen-square cursorPointer"
+                          data-toggle="modal"
+                          data-target="#noteModal"
+                          onClick={() => this.selectLeadId(lead.id)}
+                        />
                       </td>
                       <td onClick={() => this.deleteLead(lead.id)}>
                         <i className="fas fa-trash cursorPointer" />
@@ -101,6 +146,61 @@ class AllLeads extends Component {
               </table>
             </div>
           </div>
+          {/* opening Note modal */}
+          <div
+            className="modal fade"
+            id="noteModal"
+            tabIndex="-1"
+            role="dialog"
+            aria-labelledby="noteModalLabel"
+            aria-hidden="true"
+          >
+            <div className="modal-dialog modal-lg" role="document">
+              <div className="modal-content">
+                <div className="modal-body">
+                  <div className="w-100">
+                    <button
+                      type="button"
+                      className="close mr-2"
+                      data-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <p className="text-center mb-0 pt-4">
+                      Please enter Note
+                    </p>
+                    <div className="mt-3 w-75 mx-auto mb-3">
+                      <div className="row justify-content-center">
+                        <div className="col-12">
+                          <textarea
+                            type="input"
+                            placeholder="Enter Note"
+                            className="form-control"
+                            name="note"
+                            value={this.state.note}
+                            onChange={this.noteChangeHandler}
+                          />
+                          {this.state.noteError ? (
+                            <p className="errorClass fs12 text-left">
+                              {this.state.noteError}
+                            </p>
+                          ) : null}
+                        </div>
+                        <button
+                          className="mt-4"
+                          onClick={this.noteSubmitHandler}
+                        >
+                          Submit
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* closing Note modal */}
         </div>
       </div>
     );
